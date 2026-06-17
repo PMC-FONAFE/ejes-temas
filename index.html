@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eje y Temas Críticos FONAFE 2026</title>
+<style>
+:root{
+  --accent:#0078d4;--accent-l:#deecf9;--accent-d:#005a9e;
+  --bg:#f3f2f1;--card:rgba(255,255,255,0.9);--hdr:rgba(255,255,255,0.78);
+  --bd:rgba(0,0,0,0.09);--bd2:rgba(0,0,0,0.16);
+  --t1:#201f1e;--t2:#605e5c;--t3:#8a8886;
+  --s1:0 1px 4px rgba(0,0,0,0.08),0 0 1px rgba(0,0,0,0.05);
+  --s2:0 4px 16px rgba(0,0,0,0.11),0 1px 4px rgba(0,0,0,0.06);
+  --r1:4px;--r2:8px;--r3:12px;
+  --f:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --danger:#c4314b;--danger-l:#fde7e9;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:var(--f);background:var(--bg);color:var(--t1);
+  display:flex;flex-direction:column;min-height:100vh;
+  background-image:radial-gradient(ellipse at 15% 0%,rgba(0,120,212,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,rgba(0,153,188,0.05) 0%,transparent 55%);}
+
+.app-header{background:var(--hdr);backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--bd);
+  position:sticky;top:0;z-index:100;padding:0 24px;flex-shrink:0;}
+.hdr-in{height:58px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.hdr-brand{display:flex;align-items:center;gap:10px;}
+.hdr-logo{width:32px;height:32px;background:linear-gradient(135deg,#0078d4,#0099bc);
+  border-radius:var(--r1);display:flex;align-items:center;justify-content:center;}
+.hdr-logo svg{width:17px;height:17px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.hdr-t{font-size:14px;font-weight:600;color:var(--t1);letter-spacing:-0.01em;}
+.hdr-s{font-size:11px;color:var(--t2);margin-top:1px;}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+
+.search-box{position:relative;display:flex;align-items:center;}
+.search-input{font-family:var(--f);font-size:12.5px;padding:5px 10px 5px 28px;width:180px;
+  border:1px solid var(--bd2);border-radius:var(--r1);outline:none;transition:all 0.15s;background:white;}
+.search-input:focus{width:240px;border-color:var(--accent);box-shadow:0 0 0 2px rgba(0,120,212,0.15);}
+.search-icon{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--t3);pointer-events:none;}
+
+.status-pill{font-size:12px;font-weight:500;background:white;border:1px solid var(--bd);
+  border-radius:20px;padding:4px 12px;color:var(--t2);white-space:nowrap;}
+.status-pill b{color:var(--accent);}
+.s-ok b{color:#107c10;}
+
+.hint{background:var(--accent-l);border-bottom:1px solid rgba(0,120,212,0.15);
+  padding:8px 24px;font-size:12px;color:#004578;flex-shrink:0;line-height:1.4;}
+
+.board-wrap{flex:1;overflow-x:auto;overflow-y:hidden;padding:18px 24px 12px;}
+.board{display:flex;gap:12px;min-width:max-content;align-items:flex-start;}
+
+.eje-card{background:var(--card);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--bd);border-radius:var(--r3);box-shadow:var(--s1);
+  width:242px;flex-shrink:0;display:flex;flex-direction:column;
+  max-height:calc(100vh - 175px);overflow:hidden;
+  transition:box-shadow 0.15s,border-color 0.15s;}
+.eje-card:hover{box-shadow:var(--s2);}
+.eje-card.drag-over{border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(0,120,212,0.22),var(--s2);background:rgba(222,236,249,0.5);}
+
+.eje-hdr{padding:10px 12px 9px;border-bottom:1px solid var(--bd);flex-shrink:0;position:relative;}
+.eje-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r3) var(--r3) 0 0;}
+.eje-top{display:flex;align-items:center;gap:4px;margin-bottom:8px;margin-top:5px;}
+.eje-chip{font-size:10px;font-weight:700;color:white;padding:2px 7px;border-radius:10px;
+  letter-spacing:0.03em;flex-shrink:0;white-space:nowrap;}
+.eje-cnt{font-size:11px;color:var(--t3);flex:1;padding-left:4px;}
+.eje-ctls{display:flex;align-items:center;gap:1px;margin-left:auto;}
+.ec-btn{background:transparent;border:none;cursor:pointer;padding:3px 4px;
+  border-radius:var(--r1);font-size:12px;color:var(--t3);
+  transition:background 0.12s,color 0.12s;line-height:1;display:flex;align-items:center;justify-content:center;
+  width:22px;height:22px;}
+.ec-btn:hover{background:rgba(0,0,0,0.06);color:var(--t1);}
+.ec-btn:disabled{opacity:0.2;cursor:default;pointer-events:none;}
+.ec-btn.x-btn{color:#c4314b;font-size:14px;font-weight:700;}
+.ec-btn.x-btn:hover{background:#fde7e9;color:#a4262c;}
+
+.eje-nombre{font-size:12px;font-weight:600;color:var(--t1);width:100%;border:none;
+  outline:none;background:transparent;resize:none;font-family:var(--f);line-height:1.4;
+  overflow:hidden;cursor:text;border-radius:var(--r1);padding:3px 4px;
+  transition:background 0.12s;display:block;}
+.eje-nombre:hover{background:rgba(0,0,0,0.03);}
+.eje-nombre:focus{background:var(--accent-l);outline:1px solid var(--accent);}
+.foco-lbl{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;
+  letter-spacing:0.05em;margin-top:7px;margin-bottom:2px;}
+.eje-foco{font-size:11px;color:var(--t2);font-style:italic;width:100%;border:none;
+  outline:none;background:transparent;resize:none;font-family:var(--f);line-height:1.45;
+  cursor:text;border-radius:var(--r1);padding:3px 4px;transition:background 0.12s;
+  overflow:hidden;display:block;}
+.eje-foco:hover{background:rgba(0,0,0,0.03);}
+.eje-foco:focus{background:var(--accent-l);outline:1px solid var(--accent);font-style:normal;}
+
+.eje-body{padding:7px 9px 9px;overflow-y:auto;flex:1;}
+.eje-body::-webkit-scrollbar{width:4px;}
+.eje-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.12);border-radius:2px;}
+.temas-list{display:flex;flex-direction:column;gap:3px;min-height:40px;}
+
+.tema-chip{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--t1);
+  background:#faf9f8;border:1px solid var(--bd);border-radius:var(--r1);
+  padding:5px 8px;cursor:grab;user-select:none;
+  transition:background 0.12s,border-color 0.12s,box-shadow 0.12s;line-height:1.35;
+  justify-content:space-between;}
+.tema-chip:hover{background:white;border-color:rgba(0,120,212,0.35);box-shadow:var(--s1);}
+.tema-chip.dragging{opacity:0.25;}
+.tema-chip.glow-search{border-color:#107c10;background:#f3fbf3;box-shadow:0 0 6px rgba(16,124,16,0.2);}
+.drag-grip{font-size:10px;color:var(--t3);flex-shrink:0;margin-top:1px;letter-spacing:-1px;line-height:1;}
+.tema-chip:hover .drag-grip{color:var(--accent);}
+.tema-text{flex:1;padding-right:2px;word-break:break-word;}
+.info-trigger{background:transparent;border:none;cursor:pointer;color:var(--t3);
+  display:flex;align-items:center;justify-content:center;padding:2px;border-radius:50%;
+  transition:background 0.12s,color 0.12s;flex-shrink:0;width:18px;height:18px;}
+.info-trigger:hover{background:var(--accent-l);color:var(--accent);}
+.info-trigger svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.5;}
+
+.drop-ph{border:1.5px dashed rgba(0,120,212,0.35);border-radius:var(--r1);
+  height:30px;pointer-events:none;background:rgba(0,120,212,0.04);}
+
+.bandeja-card{background:rgba(255,255,255,0.75);border:1.5px dashed #c4314b;
+  border-radius:var(--r3);width:242px;flex-shrink:0;display:flex;flex-direction:column;
+  max-height:calc(100vh - 175px);overflow:hidden;}
+.bandeja-hdr{padding:10px 12px 9px;border-bottom:1px dashed rgba(196,49,75,0.25);flex-shrink:0;}
+.bandeja-ttl{font-size:11px;font-weight:600;color:#c4314b;display:flex;align-items:center;gap:6px;}
+.bandeja-body{padding:7px 9px 9px;overflow-y:auto;flex:1;}
+.bandeja-body::-webkit-scrollbar{width:4px;}
+.bandeja-body::-webkit-scrollbar-thumb{background:rgba(196,49,75,0.15);border-radius:2px;}
+
+.add-btn{width:44px;height:72px;align-self:center;flex-shrink:0;
+  background:rgba(255,255,255,0.55);border:1.5px dashed var(--bd2);
+  border-radius:var(--r3);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:24px;color:var(--t3);transition:all 0.15s;}
+.add-btn:hover{background:white;border-color:var(--accent);color:var(--accent);box-shadow:var(--s1);}
+
+.btn{font-family:var(--f);font-size:13px;font-weight:500;padding:7px 14px;
+  border-radius:var(--r1);cursor:pointer;display:inline-flex;align-items:center;
+  gap:6px;transition:all 0.12s;border:1px solid transparent;line-height:1;}
+.btn:active{transform:scale(0.98);}
+.btn-ghost{background:transparent;border-color:var(--bd2);color:var(--t1);}
+.btn-ghost:hover{background:#f3f2f1;border-color:var(--accent);color:var(--accent);}
+.btn-primary{background:var(--accent);color:white;border-color:var(--accent-d);}
+.btn-primary:hover{background:var(--accent-d);}
+.btn-green{background:#107c10;color:white;border-color:#0a5a0a;}
+.btn-green:hover{background:#0a5a0a;}
+.btn-danger-outline{background:transparent;border-color:var(--danger);color:var(--danger);}
+.btn-danger-outline:hover{background:var(--danger-l);color:var(--danger);border-color:var(--danger);}
+.sep{width:1px;height:24px;background:var(--bd);}
+
+.toast{position:fixed;bottom:68px;left:50%;transform:translateX(-50%) translateY(6px);
+  background:#323130;color:white;padding:9px 18px;border-radius:var(--r2);
+  font-size:13px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,0.2);
+  opacity:0;transition:opacity 0.22s,transform 0.22s;pointer-events:none;z-index:999;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.saved-tag{font-size:11px;color:var(--t3);display:flex;align-items:center;gap:4px;margin-left:4px;}
+
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal-overlay.open{display:flex;}
+
+.modal-box{background:white;border-radius:var(--r3);box-shadow:var(--s2);
+  border:1px solid var(--bd2);width:100%;max-width:540px;padding:24px;
+  max-height:85vh;display:flex;flex-direction:column;}
+
+.m-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;flex-shrink:0;}
+.m-ttl{font-size:16px;font-weight:600;color:var(--t1);}
+.m-sub{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;}
+.m-close{background:transparent;border:none;cursor:pointer;font-size:18px;color:var(--t3);
+  width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:var(--r1);}
+.m-close:hover{background:#f3f2f1;color:var(--t1);}
+
+.m-body{font-size:15px;line-height:1.55;color:#201f1e;overflow-y:auto;flex:1;padding-right:4px;}
+.m-body::-webkit-scrollbar{width:4px;}
+.m-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:2px;}
+
+.copy-options{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.copy-opt-card{border:1px solid var(--bd2);border-radius:var(--r2);padding:14px;
+  cursor:pointer;text-align:left;background:#faf9f8;transition:all 0.12s;display:flex;align-items:center;gap:14px;}
+.copy-opt-card:hover{border-color:var(--accent);background:white;box-shadow:var(--s1);}
+.opt-icon{width:36px;height:36px;background:var(--accent-l);color:var(--accent);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.opt-details{flex:1;}
+.opt-title{font-size:13.5px;font-weight:600;color:var(--t1);margin-bottom:2px;}
+.opt-desc{font-size:11.5px;color:var(--t2);line-height:1.35;}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="hdr-in">
+    <div class="hdr-brand">
+      <div class="hdr-logo">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div>
+        <div class="hdr-t">Tablero de Ejes y Temas</div>
+        <div class="hdr-s">FONAFE 2026</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" class="search-input" id="boardSearch" placeholder="Buscar tema" oninput="filtrarTemas()">
+      </div>
+      <div class="status-pill" id="statusPill"><b>39</b> / 39 temas asignados</div>
+      <button class="btn btn-primary" onclick="abrirModalCopia()">📋 Copiar como texto</button>
+      <button class="btn btn-green" onclick="guardarPropuesta()">💾 Guardar</button>
+      <button class="btn btn-danger-outline" onclick="abrirModalAyuda()">❓ Ayuda</button>
+      <button class="btn btn-ghost" onclick="resetear()">↺ Restablecer</button>
+      <span class="saved-tag" id="savedTag"></span>
+    </div>
+  </div>
+</header>
+
+<div class="hint" id="hintBar">
+  💡 Arrastra temas entre ejes · Usa ← → para mover un eje completo · ✕ elimina el eje · Haz clic en nombre o foco para editar · Haz clic en el botón ⓘ de cualquier tema para ver su descripción.
+</div>
+
+<div class="board-wrap">
+  <div class="board" id="board"></div>
+</div>
+
+<div class="modal-overlay" id="modalDesc" onclick="cerrarModal('modalDesc')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="m-hdr">
+      <div>
+        <div class="m-sub">Tema y Descripción</div>
+        <div class="m-ttl" id="mdTitulo">Nombre del Tema</div>
+      </div>
+      <button class="m-close" onclick="cerrarModal('modalDesc')">✕</button>
+    </div>
+    <div class="m-body" id="mdContenido"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalAyuda" onclick="cerrarModal('modalAyuda')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="m-hdr">
+      <div>
+        <div class="m-sub">GUÍA DE OPERACIÓN</div>
+        <div class="m-ttl">Funcionamiento de la Aplicación</div>
+      </div>
+      <button class="m-close" onclick="cerrarModal('modalAyuda')">✕</button>
+    </div>
+    <div class="m-body" style="font-size:13.5px; color:var(--t1); display:flex; flex-direction:column; gap:12px;">
+      <p><b>Gestión de Temas (Arrastrar y Soltar):</b><br>Haz clic sostenido sobre el icono ⠿ de cualquier tema para arrastrarlo hacia otro Eje o hacia la bandeja de elementos sin asignar.</p>
+      <p><b>Edición de Textos:</b><br>Puedes modificar los nombres de los Ejes y sus Focos de análisis directamente haciendo clic sobre el cuadro de texto correspondiente.</p>
+      <p><b>Control de Ejes:</b><br>Usa los botones con flechas (← →) situados en la parte superior de cada tarjeta para alterar el orden de los bloques completos, o presiona (✕) para remover un eje completo.</p>
+      <p><b>Barra de Herramientas Superior:</b></p>
+      <ul style="padding-left:18px; display:flex; flex-direction:column; gap:6px;">
+        <li><b>Buscar tema:</b> Escribe palabras clave para atenuar los temas no coincidentes y localizar píldoras específicas de inmediato.</li>
+        <li><b>Copiar como texto:</b> Genera reportes estructurados directamente legibles para minutas (Resumen) o anexos técnicos (Detallado).</li>
+        <li><b>Guardar:</b> Almacena la distribución actual y las ediciones en la caché local del navegador.</li>
+        <li><b>Restablecer:</b> Revierte todo el tablero a su configuración estructural de fábrica.</li>
+      </ul>
+      <p style="background:#fff3cd; border:1px solid #ffeeba; padding:10px; border-radius:var(--r2); color:#856404; font-size:12.5px; line-height:1.45; margin-top:6px;">
+        ⚠️ <b>Nota sobre la opción GUARDAR:</b> Al presionar este botón, los cambios se guardan únicamente en la caché de este navegador web. Si abres este enlace en otro dispositivo o sesión de usuario, no verás tus modificaciones. Para compartir, consolidar o validar tu propuesta con tu equipo de trabajo, utiliza la función <b>📋 Copiar como texto</b>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalCopia" onclick="cerrarModal('modalCopia')">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 440px;">
+    <div class="m-hdr">
+      <div>
+        <div class="m-ttl">Configuración de Copia</div>
+      </div>
+      <button class="m-close" onclick="cerrarModal('modalCopia')">✕</button>
+    </div>
+    <div class="m-body" style="font-size:13px; color:var(--t2);">
+      Selecciona el formato en el que deseas exportar la propuesta actual estructurada al portapapeles:
+      <div class="copy-options">
+        <div class="copy-opt-card" onclick="ejecutarCopia(false)">
+          <div class="opt-icon">📋</div>
+          <div class="opt-details">
+            <div class="opt-title">Resumen Ejecutivo</div>
+            <div class="opt-desc">Copia los Ejes, Focos y listas limpias de títulos de temas asignados. Ideal para minutas o correos.</div>
+          </div>
+        </div>
+        <div class="copy-opt-card" onclick="ejecutarCopia(true)">
+          <div class="opt-icon">📚</div>
+          <div class="opt-details">
+            <div class="opt-title">Detallado</div>
+            <div class="opt-desc">Copia la estructura de los Ejes e incluye la descripción detallada debajo de cada tema. Ideal para anexos y sustentos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const COLORS=['#0078d4','#0099bc','#107c10','#8764b8','#c4314b','#ca5010','#005a9e','#498205'];
+const TOTAL=39;
+const LS_KEY='fonafe2026_v2';
+
+const DESCRIPCIONES={
+  "Administración de Acciones y Recursos": "Custodia de los títulos representativos del capital social y gestionar eficientemente los recursos derivados de la titularidad de las acciones que el Estado posee en las distintas empresas públicas. Incluye la facultad de FONAFE para otorgar aportes de capital, préstamos o líneas de crédito a las Empresas bajo su ámbito, el manejo integrado y prudente de recursos y deudas para asegurar la sostenibilidad financiera, entre otros.",
+  "Auditoría": "Actividad de aseguramiento para evaluar controles, mitigar riesgos y validar la integridad de la gestión, contribuyendo a proteger y generar valor en la corporación",
+  "Austeridad y Disciplina": "Normas para el uso racional de recursos y control del gasto público anual",
+  "Buen Gobierno Corporativo": "Implementación de estándares de gobernanza y desempeño empresarial basados en directrices internacionales como la OCDE",
+  "Compras Corporativas": "Contratación agregada de bienes y servicios para aprovechar economías de escala",
+  "Conducta Empresarial Responsable": "Actuación ética y sostenible orientada a prevenir impactos negativos, asegurando el respeto a los derechos humanos y promoviendo el bienestar integral de los grupos de interés",
+  "Dirección y Normatividad": "Función de FONAFE para normar y dirigir la actividad empresarial del Estado, que incluye la facultad exclusiva de la Dirección Ejecutiva para emitir opiniones vinculantes que interpreten, con carácter obligatorio, el contenido de las normas emitidas.",
+  "Estructuras Corporativas Conjuntas": "Aprobación de modelos donde dos o más empresas operan con gerencias o directorios compartidos",
+  "Evaluación de Directores y Directorios": "Proceso anual de medición de cumplimiento de funciones y generación de valor de los altos mandos",
+  "Gestión de Bienes Muebles e Inmuebles": "Administración del patrimonio asegurando que los activos generen valor en todo su ciclo de vida",
+  "Gestión de Continuidad Operativa (GCO)": "Planes para mantener procesos críticos ante fenómenos naturales o siniestros",
+  "Gestión de Proyectos y Portafolios": "Gestión y aseguramiento del ciclo de vida de iniciativas y proyectos estratégicos, bajo estándares PMO, para garantizar su ejecución efectiva y el logro de resultados",
+  "Gestión de Riesgos": "Proceso continuo, sistemático e integral diseñado para identificar, evaluar, controlar y monitorear los eventos que puedan afectar el logro de los objetivos, fortaleciendo la capacidad de anticipación, respuesta y resiliencia organizacional, y a la vez promueve la identificación y el aprovechamiento de oportunidades que generen valor y desarrollo.",
+  "Gestión del Cumplimiento (Compliance)": "Proporciona una seguridad razonable en el cumplimiento del marco normativo aplicable, integrando la prevención, detección y mitigación de los riesgos de incumplimiento, incluidos aquellos vinculados al lavado de activos y financiamiento del terrorismo.",
+  "Gestión por Procesos": "Modelo para identificar, optimizar, estandarizar y mejorar continuamente las operaciones de la Empresa",
+  "Gestión Presupuestaria": "Regulación de la programación, formulación, aprobación, ejecución y evaluación de ingresos y egresos de los recursos financieros de las empresas de la Corporación y ESSALUD",
+  "Gobierno Digital": "Estrategia para la transformación digital de la gestión empresarial alineada a políticas nacionales",
+  "Implementación de Líneas de Carrera": "Programas que permiten el desarrollo y crecimiento profesional dentro de la corporación",
+  "Innovación": "Fomento de ideas o acciones nuevas o de mejora, que generen valor, eficiencia y competitividad a largo plazo",
+  "Integridad y lucha contra la corrupción": "Cultura institucional donde prima el interés público sobre el individual,sustentada en valores éticos y principios de integridad, que rechaza cualquier acto contrario a la ética y promueve la prevención, detección y mitigación de riesgos asociados a la comisión delitos y a la vulneración de la integridad institucional",
+  "Negociación Colectiva": "Gestión de acuerdos con sindicatos de FONAFE bajo principios de buena fe y sostenibilidad financiera",
+  "Planeamiento Estratégico": "Definición de la misión, visión y objetivos de largo plazo para satisfacer necesidades, optimizando la calidad, accesibilidad y cobertura en los servicios empresariales",
+  "Planeamiento Financiero": "Instrumento de gestión que permite a las Empresas del Estado contar con herramientas para adoptar las mejores decisiones de inversión, financiamiento y gestión de activos y pasivos",
+  "Política de Dividendos": "Criterios de distribución de utilidades, en base a las normas legales vigentes, y priorizando necesidades de inversión y cumplimiento de planes estratégicos de las Empresas",
+  "Política de Propiedad": "Marco estratégico para el ejercicio del Estado como propietario activo e informado sobre la organización, transformación o desinversión de empresas, asegurando su justificación, rentabilidad y valor",
+  "Políticas Remunerativas": "Marco normativo para la gestión integral de compensaciones y beneficios, estableciendo pautas de equidad, competitividad y racionalidad del gasto para atraer y retener talento estratégico (Incluye Convenio de Gestión)",
+  "Protección Legal (Personal y Directivos)": "Defensa jurídica para trabajadores y directivos por actos u omisiones realizadas en el ejercicio de sus funciones",
+  "Reputación Corporativa": "Gestión de la marca y monitoreo de la percepción de audiencias clave para fortalecer el valor institucional y la confianza ciudadana",
+  "Seguridad y protección de la Información": "Conjunto de medidas (SGSI) para proteger los activos de información y el secreto comercial de las empresas",
+  "Selección de Candidatos a Director": "Proceso de verificación de requisitos legales y validación de perfiles, méritos y de inexistencia de impedimentos, ello para asegurar la idoneidad técnica y ética de los directores previo a su nombramiento y designación oficial",
+  "Selección de Gerentes y Personal": "Procesos basados en meritocracia, perfiles de puesto y competencia profesional",
+  "Sinergia": "Facilitación de la colaboración e intercambio de mejores prácticas entre empresas para optimizar el rendimiento global",
+  "Sistema de Control Interno": "Proporciona una seguridad razonable en la eficiencia de las operaciones, la transparencia de la información y el cumplimiento de las normativas aplicables",
+  "Sistema Integrado de Gestión (SIG)": "Modelo de gestión que unifica los sistemas normativos, de cumplimiento y de gestión implementados por la Empresa, articulándolos bajo una estructura única de procesos",
+  "Sistemas de Información": "Administración de plataformas tecnológicas para integrar datos estratégicos, garantizando la transparencia y la toma de decisiones informada",
+  "Solución de Controversias Patrimoniales": "Procedimiento eficiente y de cumplimiento obligatorio, para resolver conflictos, sin recurrir a instancias judiciales, y privilegiando el interés corporativo.",
+  "Sostenibilidad": "Ámbito de gestión orientado a maximizar la creación de valor económico, social y ambiental de FONAFE, las Empresas bajo su ámbito y ESSALUD, orientada por principios de buen gobierno corporativo, contribuyendo así al desarrollo del país y promoviendo operaciones con impacto positivo en la sociedad y resultados eficientes y sostenibles a largo plazo",
+  "Gestión de Encargos Especiales": "Monitoreo de actividades específicas asignadas por el Estado, asegurando su financiamiento previo. Alcance FONAFE",
+  "Transparencia y Divulgación": "Garantía de que los actos y decisiones sean claros, públicos y comprensibles para los ciudadanos y grupos de interés"
+};
+
+const ORIG=[
+  {
+    nombre: "Dirección Estratégica y Desarrollo Empresarial",
+    foco: "El 'A dónde vamos'\nMando técnico para normar y dirigir la actividad empresarial, impulsando la creación de valor",
+    temas: ["Dirección y Normatividad", "Planeamiento Estratégico", "Sinergia", "Sostenibilidad", "Innovación", "Gestión de Proyectos y Portafolios", "Gobierno Digital", "Gestión por Procesos", "Sistema Integrado de Gestión (SIG)", "Estructuras Corporativas Conjuntas", "Gestión de Encargos Especiales", "Compras Corporativas"]
+  },
+  {
+    nombre: "Gobernanza e Integridad",
+    foco: "El 'Quién' y el 'Cómo'\nMando ético y directivo para asegurar la gobernanza, integridad y rendición de cuentas",
+    temas: ["Política de Propiedad", "Buen Gobierno Corporativo", "Selección de Candidatos a Director", "Evaluación de Directores y Directorios", "Gestión del Cumplimiento (Compliance)", "Integridad y lucha contra la corrupción"]
+  },
+  {
+    nombre: "Gestión Financiera y Patrimonial",
+    foco: "El 'Qué tenemos'\nAdministración del capital y recursos para asegurar la sostenibilidad financiera y calidad del gasto",
+    temas: ["Administración de Acciones y Recursos", "Gestión Presupuestaria", "Planeamiento Financiero", "Política de Dividendos", "Solución de Controversias Patrimoniales", "Austeridad y Disciplina", "Gestión de Bienes Muebles e Inmuebles"]
+  },
+  {
+    nombre: "Gestión del Talento y Relaciones con Grupos de Interés",
+    foco: "El 'Con quiénes'\nGestión estratégica del capital humano bajo principios de meritocracia y competitividad",
+    temas: ["Implementación de Líneas de Carrera", "Negociación Colectiva", "Políticas Remunerativas", "Protección Legal (Personal y Directivos)", "Selección de Gerentes y Personal", "Reputación Corporativa", "Transparencia y Divulgación", "Conducta Empresarial Responsable"]
+  },
+  {
+    nombre: "Riesgos, Control y Continuidad Operativa",
+    foco: "El 'Radar y Escudo'\nDetectar, controlar y mitigar los riesgos que amenazan la operación y el patrimonio",
+    temas: ["Auditoría", "Gestión de Continuidad Operativa (GCO)", "Gestión de Riesgos", "Seguridad y protección de la Información", "Sistema de Control Interno", "Sistemas de Información"]
+  }
+];
+
+let ejes=[], bandeja=[];
+let dragEl=null,dragTema=null,dragFromEje=null,ph=null;
+
+function loadInitial(){
+  try{
+    const saved=localStorage.getItem(LS_KEY);
+    if(saved){
+      const d=JSON.parse(saved);
+      ejes=d.ejes; bandeja=d.bandeja||[];
+      setSavedTag(d.ts);
+      return;
+    }
+  }catch(e){}
+  ejes=JSON.parse(JSON.stringify(ORIG)); bandeja=[];
+}
+
+function setSavedTag(ts){
+  const el=document.getElementById('savedTag');
+  if(!ts){el.textContent='';return;}
+  const d=new Date(ts);
+  const fmt=d.toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit'})
+    +' '+d.toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'});
+  el.textContent='Guardado el '+fmt;
+}
+
+function autoH(el){
+  if(!el) return;
+  el.style.height='auto';
+  el.style.height=el.scrollHeight+'px';
+}
+function num(i){return String(i+1).padStart(2,'0');}
+function color(i){return COLORS[i%COLORS.length];}
+
+function buildBoard(){
+  const board=document.getElementById('board');
+  board.innerHTML='';
+  
+  const cardsElements = [];
+  ejes.forEach((_,ei)=>{
+    const c=mkCard(ei);
+    board.appendChild(c);
+    cardsElements.push(c);
+  });
+  
+  if(bandeja.length>0) board.appendChild(mkBandeja());
+  
+  const ab=document.createElement('button');
+  ab.className='add-btn'; ab.title='Agregar nuevo eje'; ab.textContent='+';
+  ab.onclick=addEje; board.appendChild(ab);
+  
+  cardsElements.forEach(c => c._initTextareas());
+  
+  updateStatus();
+  filtrarTemas(); 
+}
+
+function mkCard(ei){
+  const e=ejes[ei], c=color(ei);
+  const card=document.createElement('div');
+  card.className='eje-card'; card.dataset.ei=ei;
+  
+  card.innerHTML = `
+    <div class="eje-hdr">
+      <div class="eje-bar" style="background:${c}"></div>
+      <div class="eje-top">
+        <span class="eje-chip" style="background:${c}">EJE ${num(ei)}</span>
+        <span class="eje-cnt" id="cnt-${ei}">${e.temas.length} temas</span>
+        <div class="eje-ctls">
+          <button class="ec-btn" title="Mover izquierda" onclick="moveEje(${ei},-1)" ${ei===0?'disabled':''}>←</button>
+          <button class="ec-btn" title="Mover derecha" onclick="moveEje(${ei},1)" ${ei===ejes.length-1?'disabled':''}>→</button>
+          <button class="ec-btn x-btn" title="Eliminar eje" onclick="delEje(${ei})">✕</button>
+        </div>
+      </div>
+      <textarea class="eje-nombre" spellcheck="false" data-ei="${ei}" data-f="nombre">${e.nombre}</textarea>
+      <div class="foco-lbl">Foco</div>
+      <textarea class="eje-foco" spellcheck="false" data-ei="${ei}" data-f="foco">${e.foco}</textarea>
+    </div>
+    <div class="eje-body"><div class="temas-list" id="list-${ei}"></div></div>
+  `;
+
+  const list=card.querySelector('#list-'+ei);
+  e.temas.forEach(t=>list.appendChild(mkChip(t,ei)));
+  setupDrop(list,ei,card);
+
+  card._initTextareas=function(){
+    card.querySelectorAll('textarea').forEach(ta=>{
+      autoH(ta);
+      ta.addEventListener('input',ev=>{
+        ejes[+ev.target.dataset.ei][ev.target.dataset.f]=ev.target.value;
+        autoH(ta);
+      });
+    });
+  };
+  return card;
+}
+
+function mkBandeja(){
+  const card=document.createElement('div');
+  card.className='bandeja-card'; card.dataset.ei='bandeja';
+  card.innerHTML=
+    '<div class="bandeja-hdr">'+
+      '<div class="bandeja-ttl">📥 Sin asignar &nbsp;<span id="bandeja-cnt" style="font-weight:400;color:#a4262c">(0 temas)</span></div>'+
+    '</div>'+
+    '<div class="bandeja-body"><div class="temas-list" id="list-bandeja"></div></div>';
+  const list=card.querySelector('#list-bandeja');
+  bandeja.forEach(t=>list.appendChild(mkChip(t,'bandeja')));
+  setupDrop(list,'bandeja',card);
+  return card;
+}
+
+function mkChip(nombre,ejeIdx){
+  const el=document.createElement('div');
+  el.className='tema-chip'; el.draggable=true;
+  el.dataset.tema=nombre; el.dataset.ei=ejeIdx;
+  
+  el.innerHTML=
+    '<span class="drag-grip">⠿</span>'+
+    '<span class="tema-text">'+nombre+'</span>'+
+    '<button class="info-trigger" title="Ver descripción">'+
+      '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'+
+    '</button>';
+  
+  el.querySelector('.info-trigger').addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    abrirModalDesc(nombre);
+  });
+
+  el.addEventListener('dragstart',ev=>{
+    dragEl=el; dragTema=nombre; dragFromEje=ejeIdx;
+    ev.dataTransfer.effectAllowed='move';
+    ph=document.createElement('div'); ph.className='drop-ph';
+    requestAnimationFrame(()=>el.classList.add('dragging'));
+  });
+  el.addEventListener('dragend',()=>{
+    el.classList.remove('dragging');
+    if(ph&&ph.parentNode) ph.parentNode.removeChild(ph);
+    ph=null; dragEl=null; dragTema=null; dragFromEje=null;
+    syncState(); updateStatus();
+  });
+  return el;
+}
+
+function setupDrop(list,ejeIdx,card){
+  list.addEventListener('dragover',ev=>{
+    ev.preventDefault();
+    if(!dragEl||String(dragEl.dataset.ei)===String(ejeIdx)) return;
+    card.classList.add('drag-over');
+    if(!ph) return;
+    const after=getAfter(list,ev.clientY);
+    after==null?list.appendChild(ph):list.insertBefore(ph,after);
+  });
+  list.addEventListener('dragleave',ev=>{
+    if(!card.contains(ev.relatedTarget)) card.classList.remove('drag-over');
+  });
+  list.addEventListener('drop',ev=>{
+    ev.preventDefault();
+    card.classList.remove('drag-over');
+    if(!dragEl||String(dragEl.dataset.ei)===String(ejeIdx)) return;
+    const after=ph&&ph.parentNode===list?ph.nextSibling:getAfter(list,ev.clientY);
+    const newChip=mkChip(dragTema,ejeIdx);
+    if(after) list.insertBefore(newChip,after);
+    else list.appendChild(newChip);
+    dragEl.remove();
+    syncState(); updateStatus();
+  });
+}
+
+function getAfter(container,y){
+  return [...container.querySelectorAll('.tema-chip:not(.dragging)')].reduce((cl,ch)=>{
+    const b=ch.getBoundingClientRect();
+    const off=y-b.top-b.height/2;
+    return off<0&&off>cl.offset?{offset:off,element:ch}:cl;
+  },{offset:Number.NEGATIVE_INFINITY}).element;
+}
+
+function syncState(){
+  ejes.forEach((_,ei)=>{
+    const l=document.getElementById('list-'+ei);
+    if(l) ejes[ei].temas=[...l.querySelectorAll('.tema-chip')].map(c=>c.dataset.tema);
+  });
+  const bl=document.getElementById('list-bandeja');
+  bandeja=bl?[...bl.querySelectorAll('.tema-chip')].map(c=>c.dataset.tema):[];
+}
+
+function updateStatus(){
+  ejes.forEach((_,ei)=>{
+    const l=document.getElementById('list-'+ei);
+    const c=document.getElementById('cnt-'+ei);
+    if(l&&c) c.textContent=l.querySelectorAll('.tema-chip').length+' temas';
+  });
+  const bl=document.getElementById('list-bandeja');
+  const bc=document.getElementById('bandeja-cnt');
+  if(bl&&bc){
+    const n=bl.querySelectorAll('.tema-chip').length;
+    bc.textContent='('+n+' tema'+(n!==1?'s':'')+')';
+    if(n===0){
+      const bcard=document.querySelector('.bandeja-card');
+      if(bcard) bcard.style.display='none';
+      bandeja=[];
+    }
+  }
+  const asignados=ejes.reduce((s,e)=>s+e.temas.length,0);
+  const pill=document.getElementById('statusPill');
+  const ok=bandeja.length===0;
+  pill.className='status-pill'+(ok?' s-ok':'');
+  pill.innerHTML='<b>'+asignados+'</b> / '+TOTAL+' temas asignados'+(ok?' ✓':'');
+}
+
+function filtrarTemas() {
+  const query = document.getElementById('boardSearch').value.toLowerCase().trim();
+  const chips = document.querySelectorAll('.tema-chip');
+  
+  chips.forEach(chip => {
+    const tNombre = chip.dataset.tema.toLowerCase();
+    const tDesc = (DESCRIPCIONES[chip.dataset.tema] || '').toLowerCase();
+    
+    if (query === '') {
+      chip.classList.remove('glow-search');
+      chip.style.opacity = '1';
+    } else if (tNombre.includes(query) || tDesc.includes(query)) {
+      chip.classList.add('glow-search');
+      chip.style.opacity = '1';
+    } else {
+      chip.classList.remove('glow-search');
+      chip.style.opacity = '0.35';
+    }
+  });
+}
+
+function moveEje(ei,dir){
+  syncState();
+  const ni=ei+dir;
+  if(ni<0||ni>=ejes.length) return;
+  [ejes[ei],ejes[ni]]=[ejes[ni],ejes[ei]];
+  buildBoard();
+}
+
+function delEje(ei){
+  syncState();
+  const t=ejes[ei].temas;
+  const msg=t.length>0
+    ?'¿Eliminar el Eje '+num(ei)+'?\nSus '+t.length+' temas pasarán a la bandeja "Sin asignar".'
+    :'¿Eliminar el Eje '+num(ei)+'? Está vacío.';
+  if(!confirm(msg)) return;
+  bandeja=[...bandeja,...t];
+  ejes.splice(ei,1);
+  buildBoard();
+}
+
+function addEje(){
+  syncState();
+  ejes.push({nombre:'Nuevo eje — haz clic para editar',foco:'Describe el foco de este eje',temas:[]});
+  buildBoard();
+  const ni=ejes.length-1;
+  const ta=document.querySelector('textarea[data-ei="'+ni+'"][data-f="nombre"]');
+  if(ta){ta.focus();ta.select();}
+}
+
+function resetear(){
+  if(!confirm('¿Restablecer la propuesta original?\nSe perderán todos los cambios.')) return;
+  ejes=JSON.parse(JSON.stringify(ORIG)); bandeja=[];
+  document.getElementById('savedTag').textContent='';
+  document.getElementById('boardSearch').value='';
+  buildBoard();
+}
+
+function guardarPropuesta(){
+  syncState();
+  ejes.forEach((_,ei)=>{
+    const tn=document.querySelector('textarea[data-ei="'+ei+'"][data-f="nombre"]');
+    const tf=document.querySelector('textarea[data-ei="'+ei+'"][data-f="foco"]');
+    if(tn) ejes[ei].nombre=tn.value;
+    if(tf) ejes[ei].foco=tf.value;
+  });
+  const ts=new Date().toISOString();
+  localStorage.setItem(LS_KEY,JSON.stringify({ejes,bandeja,ts}));
+  setSavedTag(ts);
+  showToast('💾 Propuesta guardada correctamente');
+}
+
+function abrirModalDesc(tema){
+  document.getElementById('mdTitulo').textContent = tema;
+  document.getElementById('mdContenido').textContent = DESCRIPCIONES[tema] || 'Sin descripción disponible.';
+  document.getElementById('modalDesc').classList.add('open');
+}
+
+function abrirModalAyuda(){
+  document.getElementById('modalAyuda').classList.add('open');
+}
+
+function abrirModalCopia(){
+  document.getElementById('modalCopia').classList.add('open');
+}
+
+function cerrarModal(id){
+  document.getElementById(id).classList.remove('open');
+}
+
+function ejecutarCopia(incluirDescripciones){
+  cerrarModal('modalCopia');
+  syncState();
+  
+  ejes.forEach((_,ei)=>{
+    const tn=document.querySelector('textarea[data-ei="'+ei+'"][data-f="nombre"]');
+    const tf=document.querySelector('textarea[data-ei="'+ei+'"][data-f="foco"]');
+    if(tn) ejes[ei].nombre=tn.value;
+    if(tf) ejes[ei].foco=tf.value;
+  });
+
+  // Reintroducción exacta de tu cabecera con el conteo automático de Ejes y Temas
+  let txt='PROPUESTA DE EJES Y TEMAS CRÍTICOS\n';
+  txt+='Total Ejes: '+ejes.length+' | Total Temas: '+TOTAL+'\n';
+  txt+='═'.repeat(44)+'\n\n';
+
+  ejes.forEach((e,ei)=>{
+    txt+='EJE '+num(ei)+': '+e.nombre.toUpperCase()+'\n';
+    txt+='Foco: '+e.foco+'\n\n';
+    txt+='Temas asignados ('+e.temas.length+'):\n';
+    e.temas.forEach((t, ti)=>{
+      txt+=(ti+1)+') '+t+'\n';
+      if(incluirDescripciones){
+        txt+='Descripción: '+(DESCRIPCIONES[t] || 'Sin descripción.')+'\n';
+      }
+    });
+    txt+='\n';
+  });
+
+  if(bandeja.length){
+    txt+='SIN ASIGNAR ('+bandeja.length+'):\n';
+    bandeja.forEach((t, ti)=>{
+      txt+=(ti+1)+') '+t+'\n';
+      if(incluirDescripciones){
+        txt+='Descripción: '+(DESCRIPCIONES[t] || 'Sin descripción.')+'\n';
+      }
+    });
+  }
+
+  navigator.clipboard.writeText(txt)
+    .then(()=>showToast('✓ Copiado al portapapeles'))
+    .catch(()=>showToast('Error al copiar'));
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+loadInitial();
+buildBoard();
+</script>
+</body>
+</html>
