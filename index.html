@@ -204,7 +204,7 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);
       </div>
       <div class="status-pill" id="statusPill"><b>39</b> / 39 temas asignados</div>
       <button class="btn btn-primary" onclick="abrirModalCopia()">📋 Copiar como texto</button>
-      <button class="btn btn-green" onclick="guardarPropuesta()">💾 Guardar</button>
+      <button class="btn btn-green" onclick="document.getElementById('modalConfirmarGuardar').classList.add('open')">💾 Guardar</button>
       <button class="btn btn-danger-outline" onclick="abrirModalAyuda()">❓ Ayuda</button>
       <button class="btn btn-ghost" onclick="resetear()">↺ Restablecer</button>
       <span class="saved-tag" id="savedTag"></span>
@@ -253,9 +253,6 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);
         <li><b>Guardar:</b> Almacena la distribución actual y las ediciones en la caché local del navegador.</li>
         <li><b>Restablecer:</b> Revierte todo el tablero a su configuración estructural de fábrica.</li>
       </ul>
-      <p style="background:#fff3cd; border:1px solid #ffeeba; padding:10px; border-radius:var(--r2); color:#856404; font-size:12.5px; line-height:1.45; margin-top:6px;">
-        ⚠️ <b>Nota sobre la opción GUARDAR:</b> Al presionar este botón, los cambios se guardan únicamente en la caché de este navegador web. Si abres este enlace en otro dispositivo o sesión de usuario, no verás tus modificaciones. Para compartir, consolidar o validar tu propuesta con tu equipo de trabajo, utiliza la función <b>📋 Copiar como texto</b>.
-      </p>
     </div>
   </div>
 </div>
@@ -285,6 +282,30 @@ body{font-family:var(--f);background:var(--bg);color:var(--t1);
             <div class="opt-desc">Copia la estructura de los Ejes e incluye la descripción detallada debajo de cada tema. Ideal para anexos y sustentos.</div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalConfirmarGuardar" onclick="cerrarModal('modalConfirmarGuardar')">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 440px;">
+    <div class="m-hdr">
+      <div>
+        <div class="m-ttl">Confirmar Guardado</div>
+      </div>
+      <button class="m-close" onclick="cerrarModal('modalConfirmarGuardar')">✕</button>
+    </div>
+    <div class="m-body" style="font-size:13px; color:var(--t2); display:flex; flex-direction:column; gap:12px;">
+      
+      <div style="background:#fff3cd; border:1px solid #ffeeba; padding:10px; border-radius:var(--r2); color:#856404; font-size:12.5px; line-height:1.45;">
+        ⚠️ <b>Nota sobre la opción GUARDAR:</b> Al presionar este botón, los cambios se guardan únicamente en la caché de este navegador web. Si abres este enlace en otro dispositivo o sesión de usuario, no verás tus modificaciones.
+      </div>
+      
+      <p style="color:var(--t1); line-height:1.4;">Para compartir, consolidar o validar tu propuesta con tu equipo de trabajo, utiliza la función <b>📋 Copiar como texto</b>.</p>
+
+      <div style="display:flex; gap:10px; margin-top:8px; justify-content:flex-end;">
+        <button class="btn btn-ghost" onclick="cerrarModal('modalConfirmarGuardar')">Cancelar</button>
+        <button class="btn btn-green" onclick="ejecutarGuardarEfectivo()">💾 Confirmar y Guardar</button>
       </div>
     </div>
   </div>
@@ -387,7 +408,7 @@ function setSavedTag(ts){
   const el=document.getElementById('savedTag');
   if(!ts){el.textContent='';return;}
   const d=new Date(ts);
-  const fmt=d.toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit'})
+  const fmt=d.toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit',year:'numeric'})
     +' '+d.toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'});
   el.textContent='Guardado el '+fmt;
 }
@@ -633,7 +654,11 @@ function resetear(){
   buildBoard();
 }
 
-function guardarPropuesta(){
+function ejecutarGuardarEfectivo(){
+  // 1. Cierra el modal intermedio de advertencia automáticamente
+  cerrarModal('modalConfirmarGuardar');
+  
+  // 2. Ejecuta el proceso de guardado real en la caché que ya tenías configurado
   syncState();
   ejes.forEach((_,ei)=>{
     const tn=document.querySelector('textarea[data-ei="'+ei+'"][data-f="nombre"]');
